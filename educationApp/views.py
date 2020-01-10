@@ -9,9 +9,9 @@ import json
 @csrf_exempt
 @require_http_methods(["POST"])
 def search(request):
-    jsonBody = json.loads(request.body)
+    words = request.POST.get('search')
     dataService = DataService()
-    datas = dataService.getAllIndex(jsonBody['words'])
+    datas = dataService.getAllIndex(words)
     render = render_to_string('education_data_list.html',{'datas': datas})
     return HttpResponse(render)
 
@@ -21,14 +21,9 @@ def getDatas(request):
     datas = dataService.getDatas(request.GET['name'])
     render = render_to_string('education_data.html', {'datas': datas.datas})
     return HttpResponse(render)
-    #print(type(datas.datas))
-    #return HttpResponse(json.dumps(datas.datas, ensure_ascii=False),
-    #       content_type="application/json")
-    
-'''
-@require_http_methods(["GET"])    
-def test(request):
-    list = [{id: 1, 'name': 'Jack1'}, {id: 2, 'name': 'Rose2'}]
-    render = render_to_string('education_data_list.html',{'students': list})
+
+@require_http_methods(["GET"])
+def index(request):
+    render = render_to_string('search.html')
     return HttpResponse(render)
-'''
+
