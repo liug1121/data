@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from educationApp.models import Datas
+from educationApp.models import Datas, Page
 from educationApp.services import NameMatcherService, DataService
 from django.views.decorators.http import require_http_methods
 from django.template.loader import render_to_string
@@ -11,10 +11,22 @@ import json
 def search(request):
     words = request.POST.get('search')
     dataService = DataService()
-    datas = dataService.getAllIndex(words)
+    page = Page(0, 10)
+    datas = dataService.getAllIndex(words, page)
     render = render_to_string('education_data_list.html',{'datas': datas})
     return HttpResponse(render)
 
+@csrf_exempt
+@require_http_methods(["POST"])
+def searchMore(request):
+    size = request.POST.get('size')
+    startPage = request.POST.get('startPage')
+    page = Page(int(startPage), int(size))
+    dataService = DataService()
+    datas = dataService.getAllIndex('asasa', page)
+    render = render_to_string('education_data_more_list.html',{'datas': datas})
+    return HttpResponse(render)
+    
 @require_http_methods(["GET"])
 def getDatas(request):
     dataService = DataService()

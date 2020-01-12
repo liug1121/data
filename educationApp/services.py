@@ -1,5 +1,5 @@
 #create services here
-from educationApp.models import Datas, Index
+from educationApp.models import Datas, Index, Page
 from difflib import SequenceMatcher
 import  os
 import educationApp.utils as utils
@@ -13,9 +13,9 @@ class DataService:
         datas = self.getDatasByIndex(name)
         return datas
     
-    def getAllIndex(self, name):
+    def getAllIndex(self, name, page):
         matcherService = NameMatcherService()
-        allIndex = matcherService.getAllIndex(name)
+        allIndex = matcherService.getAllIndex(name, page)
         return allIndex
 
     def getDatasByIndex(self, index):
@@ -99,7 +99,7 @@ class NameMatcherService:
             break
         return index
     
-    def getAllIndex(self, nameForMatch):
+    def getAllIndex(self, nameForMatch, page):
         analyzer = Analyzer()
         segWords = analyzer.cutWords(nameForMatch)
         wordCorpora = self.createWordsCorpora()
@@ -109,7 +109,8 @@ class NameMatcherService:
         for documentNumber, score in sorted(enumerate(similaries), key=lambda x: x[1], reverse=True):
             index = wordCorpora[documentNumber]
             allIndex.append(index)
-        return allIndex
+        endPage = page.getStartPage() + page.getSize()
+        return allIndex[page.getStartPage():endPage]
             
     
     

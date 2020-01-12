@@ -1,13 +1,5 @@
 {% load static %}
-<!DOCTYPE html>
-<html>
-   <head>
-        <link rel="stylesheet" type="text/css" href="{%  static "css/common.css" %}">
-        <title>list</title>
-   </head>
- <body>
-    <div id = "list">
-    {% for data in datas %}
+{% for data in datas %}
     <div class = "datas">
       <a href="">{{ data }}</a>
       <table>
@@ -21,10 +13,4 @@
        </tr>
       </table>
    </div>
-   {% endfor %}
-   </div>
- </body>
- <button id="search_more">显示更多......</button>
-</html>
-<script type="text/javascript" src="{%  static "jquery-3.4.1.min.js" %}"></script> 
-<script type="text/javascript" src="{%  static "js/main.js" %}"></script>
+{% endfor %}
