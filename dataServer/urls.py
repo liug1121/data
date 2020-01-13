@@ -28,7 +28,7 @@ from django.urls import path
 from educationApp import views
 urlpatterns = [
     path('search/',  views.search, name='search'),
-    path('datas/', views.getDatas, name='datas'),
+    path('search/datas/', views.getDatas, name='datas'),
     path('', views.index, name='index'),
     path('search/searchmore/', views.searchMore, name='searchMore')
     #path('test/', views.test, name='test')

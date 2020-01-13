@@ -6,10 +6,11 @@
         <title>list</title>
    </head>
  <body>
+ 	<input type="search" name="search" id="search_words" value="{{words}}"><br>
     <div id = "list">
     {% for data in datas %}
     <div class = "datas">
-      <a href="">{{ data }}</a>
+      <a href="datas/?name='{{data}}'">{{ data }}</a>
       <table>
        <tr>
         <td><img class="data" src="{% static "img/img.jpg" %}"></td>

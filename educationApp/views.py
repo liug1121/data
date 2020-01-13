@@ -13,7 +13,7 @@ def search(request):
     dataService = DataService()
     page = Page(0, 10)
     datas = dataService.getAllIndex(words, page)
-    render = render_to_string('education_data_list.html',{'datas': datas})
+    render = render_to_string('education_data_list.html',{'datas': datas, 'words': words})
     return HttpResponse(render)
 
 @csrf_exempt
@@ -21,16 +21,17 @@ def search(request):
 def searchMore(request):
     size = request.POST.get('size')
     startPage = request.POST.get('startPage')
+    words = request.POST.get('words')
     page = Page(int(startPage), int(size))
     dataService = DataService()
-    datas = dataService.getAllIndex('asasa', page)
-    render = render_to_string('education_data_more_list.html',{'datas': datas})
+    datas = dataService.getAllIndex(words, page)
+    render = render_to_string('education_data_more_list.html',{'datas': datas,'words': words})
     return HttpResponse(render)
     
 @require_http_methods(["GET"])
 def getDatas(request):
     dataService = DataService()
-    datas = dataService.getDatas(request.GET['name'])
+    datas = dataService.getDatas(eval(request.GET['name']))
     render = render_to_string('education_data.html', {'datas': datas.datas})
     return HttpResponse(render)
 
